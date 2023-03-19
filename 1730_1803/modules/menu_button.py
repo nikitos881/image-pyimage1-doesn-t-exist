@@ -2,6 +2,7 @@ import customtkinter as ctk
 import modules.screen_app as s_app
 from random import randint
 import modules.find_path as m_path
+import modules.create_json as m_json
 from PIL import Image
 
 width_input = 250
@@ -13,6 +14,14 @@ img_height = 230
 text1 = ctk.StringVar()
 text2 = ctk.StringVar()
 text3 = ctk.StringVar()
+
+reg_dict1 = {}
+reg_dict2 = {}
+reg_dict3 = {}
+
+reg_dict_1 = {}
+reg_dict_2 = {}
+reg_dict_3 = {}
 
 font_size = ctk.CTkFont(
     family= "Arial",
@@ -101,14 +110,12 @@ def login():
     password_text = create_button_for_text(master= login_app, text= "Пароль: ")
     password_text.place(x= 250, y= 147, anchor= ctk.CENTER)
 
+    login_button = create_button_registration(master = login_app, text= "Увійти",command = login_button)
+    login_button.place(x= 250, y= 400, anchor= ctk.CENTER)
+
     def login_button():
         app= s_app.App(500, 500)
         app.title("Додаток з отримання картинок")
-
-
-
-    login_button = create_button_registration(master = login_app, text= "Увійти",command = login_button)
-    login_button.place(x= 250, y= 400, anchor= ctk.CENTER)
 
     login_app.mainloop()
 
@@ -172,6 +179,13 @@ def register():
     password_accept_text.place(x= 250, y= 277, anchor= ctk.CENTER)
 
     def registration_button():
+        global reg_dict1
+        reg_dict1 = {"mail" : input_register_email.get(),
+                     "password" : input_register_password.get(),
+                     "accept" : input_register_accept.get()}
+        m_json.create_json(reg_dict1)
+        m_json.read_json(reg_dict_1)
+        #print(reg_dict1)
         app= s_app.App(500, 500)
         app.title("Додаток з отримання картинок")
 
